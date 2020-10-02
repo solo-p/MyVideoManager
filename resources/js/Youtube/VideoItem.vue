@@ -26,7 +26,7 @@
 
     export default {
 
-        props: ['video']
+        props: ['video'],
 
         computed: {
             videoTitle() {
@@ -55,7 +55,7 @@
 
 <style lang="scss">
     .card {
-        margin: 0px 5px 0px 0px;
+        margin: 0px 5px 5px 0px;
 
         .card-img-top {
             max-height: 210px;

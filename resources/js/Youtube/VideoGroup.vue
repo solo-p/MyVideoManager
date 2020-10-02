@@ -4,6 +4,7 @@
 
         <video-item
 
+            v-images-loaded:on.progress="imageProgress"
             v-for="video in videos"
             :video="video"
             :key="video.id.videoId"
@@ -23,7 +24,9 @@
 
     import Isotope from 'isotope-layout';
 
-    import VideoItem from './VideoItem.vue';
+    import VueLoadImage from 'vue-load-image';
+
+    import VideoItem from './VideoItem.vue'
 
     export default {
 
@@ -36,15 +39,21 @@
 
         },
 
+        directives: {
+            VueLoadImage
+        },
+
         created()
         {
-            this.relayoutTheGrid();
+
         },
 
         data() {
             return {
 
-                isotope: null;
+                isotope: null,
+
+                counter: 0
 
             }
         },
@@ -64,8 +73,18 @@
 
                 }, 1);
 
-            }
+            },
+
+            imageProgress(instance, img) {
+                console.log('instance', instance, 'img', img);
+
+                    this.counter++;
+                    if(this.counter == this.videos.length) {
+                        this.relayoutTheGrid();
+                    }
+             }
         }
+
     }
 
 </script>
