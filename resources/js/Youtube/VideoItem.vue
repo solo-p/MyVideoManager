@@ -3,6 +3,7 @@
     <div class="VideoItem__wrapper">
 
         <div class="card" style="width: 18rem;">
+
           <img class="card-img-top" v-bind:src="videoImage" v-bind:alt="videoTitle">
 
           <div class="card-body">

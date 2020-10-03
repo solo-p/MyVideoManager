@@ -1,6 +1,8 @@
 <template>
 
     <div class="YoutubeDash__wrapper">
+        <finder></finder>
+
         <video-group
             :videos="videos">
 
@@ -16,13 +18,15 @@
 
     import VideoGroup from './VideoGroup.vue';
 
+    import Finder from './Finder.vue';
+
     import Search from './Search';
 
     export default {
 
     components: {
 
-        VideoGroup
+        VideoGroup, Finder
 
     },
 
@@ -35,6 +39,10 @@
                 items: '10',
                 term: 'laravel repository'
             }, response => this.videos = response);
+
+            window.eventBus.$on('searchResultFromYoutube', videos => {
+                console.log('search result', videos);
+            });
 
         },
 

@@ -22,6 +22,10 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('youtube-dashboard', require('./Youtube/YoutubeDash.vue').default);
 
+window.eventBus = new Vue({
+    
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
