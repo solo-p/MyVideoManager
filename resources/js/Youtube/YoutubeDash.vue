@@ -3,10 +3,14 @@
     <div class="YoutubeDash__wrapper">
         <finder></finder>
 
-        <video-group
-            :videos="videos">
+        <div v-if="!loading">
+            <video-group
+                :videos="videos">
 
-        </video-group>
+            </video-group>
+        </div>
+
+        <div v-if="loading">Loading...</div>
     </div>
 
 
@@ -35,23 +39,37 @@
 
             Search({
                 apiKey: 'AIzaSyDCJGBbq5Qm04-2nB0bojAFemHjFGht7sQ',
-                term: 'X Men',
-                items: '10',
-                term: 'laravel repository'
-            }, response => this.videos = response);
+                term: searchTerm,
+                items: 10
+            }, response => this.handleSearchResults(response));
 
-            window.eventBus.$on('searchResultFromYoutube', videos => {
-                console.log('search result', videos);
-            });
+           window.eventBus.$on('searchForYoutubeStarted', (string) => {
+                this.loading = true;
+                this.localDB.setData('search', string);
+           });
+
+           window.eventBus.$on('searchResultFromYoutube', videos => {
+               console.log('search result', videos);
+               this.loading = false;
+               this.videos = videos;
+           });
 
         },
 
         data() {
-            return {
-                videos: null
-            }
-        }
+              return {
+                localDB: new LocalDB(),
+                videos: null,
+                loading: true
+              }
+        },
 
+        methods: {
+              handleSearchResults(result) {
+                this.loading = false;
+                this.videos = result;
+              }
+        }
 
 
     }

@@ -1910,22 +1910,42 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Search */ "./resources/js/Youtube/Search.js");
 /* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Search__WEBPACK_IMPORTED_MODULE_0__);
+ //import LocalDB from "../LocalDB";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    var placeholder = this.localDB.getData('search');
+
+    if (placeholder) {
+      this.setPlaceHolder(placeholder);
+    }
+  },
   data: function data() {
     return {
-      searchString: ''
+      localDB: new LocalDB(),
+      searchString: '',
+      placeholder: 'asd'
     };
   },
   methods: {
     handleFormSubmit: function handleFormSubmit() {
+      var _this = this;
+
+      window.eventBus.$emit('searchForYoutubeStarted', this.searchString);
       _Search__WEBPACK_IMPORTED_MODULE_0___default()({
         apiKey: 'AIzaSyDCJGBbq5Qm04-2nB0bojAFemHjFGht7sQ',
         term: 'this.searchString',
         items: '10'
       }, function (data) {
         window.eventBus.$emit('searchResultFromYoutube', data);
+
+        _this.setPlaceHolder(_this.searchString);
+
+        _this.searchString = '';
       });
+    },
+    setPlaceHolder: function setPlaceHolder(string) {
+      this.placeholder = "Search result for " + string;
     }
   }
 });
@@ -1946,10 +1966,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_load_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-load-image */ "./node_modules/vue-load-image/dist/vue-load-image.js");
 /* harmony import */ var vue_load_image__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_load_image__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _VideoItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VideoItem.vue */ "./resources/js/Youtube/VideoItem.vue");
-//
-//
-//
-//
 //
 //
 //
@@ -1999,7 +2015,6 @@ __webpack_require__.r(__webpack_exports__);
       }, 1);
     },
     imageProgress: function imageProgress(instance, img) {
-      console.log('instance', instance, 'img', img);
       this.counter++;
 
       if (this.counter == this.videos.length) {
@@ -2075,8 +2090,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Finder_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Finder.vue */ "./resources/js/Youtube/Finder.vue");
 /* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Search */ "./resources/js/Youtube/Search.js");
 /* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Search__WEBPACK_IMPORTED_MODULE_2__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
 //
 //
 //
@@ -2104,21 +2121,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     var _this = this;
 
-    _Search__WEBPACK_IMPORTED_MODULE_2___default()(_defineProperty({
+    _Search__WEBPACK_IMPORTED_MODULE_2___default()({
       apiKey: 'AIzaSyDCJGBbq5Qm04-2nB0bojAFemHjFGht7sQ',
-      term: 'X Men',
-      items: '10'
-    }, "term", 'laravel repository'), function (response) {
-      return _this.videos = response;
+      term: searchTerm,
+      items: 10
+    }, function (response) {
+      return _this.handleSearchResults(response);
+    });
+    window.eventBus.$on('searchForYoutubeStarted', function (string) {
+      _this.loading = true;
+
+      _this.localDB.setData('search', string);
     });
     window.eventBus.$on('searchResultFromYoutube', function (videos) {
       console.log('search result', videos);
+      _this.loading = false;
+      _this.videos = videos;
     });
   },
   data: function data() {
     return {
-      videos: null
+      localDB: new LocalDB(),
+      videos: null,
+      loading: true
     };
+  },
+  methods: {
+    handleSearchResults: function handleSearchResults(result) {
+      this.loading = false;
+      this.videos = result;
+    }
   }
 });
 
@@ -41858,22 +41890,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "Search__wrapper" }, [
-      _c("div", { staticClass: "container" }, [
-        _vm._v(
-          '"\n                type="text"\n                class="form-control">\n        '
-        )
-      ])
+  return _c("div", { staticClass: "Search__wrapper" }, [
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.handleFormSubmit($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.searchString,
+                expression: "searchString"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { placeholder: _vm.placeholder, type: "text" },
+            domProps: { value: _vm.searchString },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.searchString = $event.target.value
+              }
+            }
+          })
+        ]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41992,7 +42048,11 @@ var render = function() {
     [
       _c("finder"),
       _vm._v(" "),
-      _c("video-group", { attrs: { videos: _vm.videos } })
+      !_vm.loading
+        ? _c("div", [_c("video-group", { attrs: { videos: _vm.videos } })], 1)
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e()
     ],
     1
   )
