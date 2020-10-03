@@ -8,4 +8,5 @@ Packages Used
 - isotope
 - npm i vue-load-image
 - https://github.com/solo-p/MyVideoManager
+- npm install vue-router
 
