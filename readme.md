@@ -9,4 +9,5 @@ Packages Used
 - npm i vue-load-image
 - https://github.com/solo-p/MyVideoManager
 - npm install vue-router
+- composer require anhskohbo/no-captcha
 

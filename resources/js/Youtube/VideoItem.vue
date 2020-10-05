@@ -1,23 +1,30 @@
 <template>
 
-    <div class="VideoItem__wrapper">
 
-        <div class="card" style="width: 18rem;">
+  <div class="VideoItem__wrapper clearfix">
 
-          <img class="card-img-top" v-bind:src="videoImage" v-bind:alt="videoTitle">
+    <div class="card" style="width: 15rem;">
+      <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId} }">
+        <img class="card-img-top" v-bind:src="videoImage" v-bind:alt="videoTitle">
+      </router-link>
 
-          <div class="card-body">
-            <h5 class="card-title">{{videoTitle}}</h5>
+      <div class="card-body">
 
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <h5 class="card-title">
+          <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId} }">
+            {{videoTitle}}
+          </router-link>
+        </h5>
+        <p class="card-text">{{videoDescription}}</p>
 
-            <a href="#" class="btn btn-primary">{{videoDescription}}</a>
-          </div>
+        <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId} }" class="btn btn-primary">
+          Show video
+        </router-link>
 
-        </div>
-
+      </div>
     </div>
 
+  </div>
 
 
 </template>
@@ -31,16 +38,31 @@
 
         computed: {
             videoTitle() {
-
-                return this.video.snippet.title;
-
+                  if (this.video.snippet.title) {
+                    let length = 50;
+                    let string = this.video.snippet.title.substring(0, 50);
+                    if (this.video.snippet.title.length > length) {
+                      string = string + "...";
+                    }
+                    return string;
+                  } else {
+                    return "No title for this video.";
+                  }
             },
 
             videoDescription() {
-
-                return this.video.snippet.description;
-
+                  if (this.video.snippet.description) {
+                    let length = 100;
+                    let string = this.video.snippet.description.substring(0, 50);
+                    if (this.video.snippet.description.length > length) {
+                      string = string + "...";
+                    }
+                    return string;
+                  } else {
+                    return "No description for this video.";
+                  }
             },
+
 
             videoImage() {
 
@@ -55,11 +77,17 @@
 
 
 <style lang="scss">
-    .card {
-        margin: 0px 5px 5px 0px;
-
-        .card-img-top {
-            max-height: 210px;
-        }
+.card {
+  .card-title a {
+    color: #212529;
+    &:hover {
+      text-decoration: none;
+      border-bottom: 2px solid #212529;
     }
+  }
+  margin: 0px 5px 5px 0px;
+  .card-img-top {
+    max-height: 210px;
+  }
+}
 </style>
