@@ -10,4 +10,6 @@ Packages Used
 - https://github.com/solo-p/MyVideoManager
 - npm install vue-router
 - composer require anhskohbo/no-captcha
-
+- composer require laravel/passport | php artisan passport install
+- composer require pusher/pusher-php-server
+- npm install laravel-echo pusher-js  --save
