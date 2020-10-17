@@ -46,7 +46,6 @@
     created() {
       this.videoId = this.$route.params.id;
       this.url = `https://www.youtube.com/embed/${this.videoId}`;
-
       GetVideo({
         apiKey: 'AIzaSyDCJGBbq5Qm04-2nB0bojAFemHjFGht7sQ',
         videoId: this.videoId

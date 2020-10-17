@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Mail\ActivateUserAccount;
 use App\User;
 use Illuminate\Support\Facades\Mail;
-//use App\Mail\ActivateUserAccount;
 
 
 class AccountActivation

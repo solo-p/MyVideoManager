@@ -9,15 +9,19 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
+
 import VueRouter from 'vue-router';
-//import VueYoutube from 'vue-youtube';
+import VueYoutube from 'vue-youtube';
 //import Notifications from 'vue-notification';
 
 import YoutubeDash from './Youtube/YoutubeDash.vue';
-//import VideoDetail from './Youtube/VideoDetail.vue';
-//import MyPlaylists from './Youtube/MyPlaylists.vue';
+import VideoDetail from './Youtube/VideoDetail.vue';
+import MyPlaylists from './Youtube/MyPlaylists.vue';
 
 
+Vue.use(VueRouter);
+Vue.use(VueYoutube);
+Vue.use(Notifications);
 
 
 // const files = require.context('./', true, /\.vue$/i);
@@ -37,7 +41,8 @@ window.eventBus = new Vue({
 
 const routes = [
     {path: '/', component: YoutubeDash, 'name': 'youtube-dash'},
-    {path: '/video', component: VideoDetail, 'name': 'youtube-video'}
+    {path: '/video/:id', component: VideoDetail, 'name': 'youtube-video'},
+    {path: '/playlists', component: MyPlaylists, 'name': 'my-playlist-page'}
 ];
 
 const router = new VueRouter({

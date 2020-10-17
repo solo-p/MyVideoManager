@@ -13,3 +13,4 @@ Packages Used
 - composer require laravel/passport | php artisan passport install
 - composer require pusher/pusher-php-server
 - npm install laravel-echo pusher-js  --save
+- npm i vue-notification --save
