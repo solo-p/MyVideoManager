@@ -80,11 +80,13 @@
     .card {
       .card-title a {
         color: #212529;
+
         &:hover {
           text-decoration: none;
           border-bottom: 2px solid #212529;
         }
       }
+
       margin: 0px 5px 5px 0px;
       .card-img-top {
         max-height: 210px;

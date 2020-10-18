@@ -5,7 +5,7 @@ Laravel and Vue.js application for managing youtube videos using the Youtube Sea
 
 Packages Used
 - led
-- isotope
+- npm install isotope-layout [isotope]
 - npm i vue-load-image
 - https://github.com/solo-p/MyVideoManager
 - npm install vue-router
@@ -14,3 +14,4 @@ Packages Used
 - composer require pusher/pusher-php-server
 - npm install laravel-echo pusher-js  --save
 - npm i vue-notification --save
+-  npm install --save vue-youtube

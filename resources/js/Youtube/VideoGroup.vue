@@ -20,7 +20,7 @@
 
     import Isotope from 'isotope-layout';
 
-    import VueLoadImage from 'vue-load-image';
+    import VueLoadImage from 'vue-load-image'; //imagesLoaded
 
     import VideoItem from './VideoItem.vue'
 
@@ -36,11 +36,10 @@
         },
 
         directives: {
-            VueLoadImage
+            VueLoadImage //imagesLoaded
         },
 
-        created()
-        {
+        created(){
 
         },
 

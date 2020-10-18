@@ -26,16 +26,19 @@
 
     import Search from './Search';
 
+    import LocalDB from './../LocalDB';
+
     export default {
 
-    components: {
+        components: {
 
-        VideoGroup, Finder
+          VideoGroup, Finder
 
-    },
+        },
 
 
         created() {
+            let searchTerm = this.localDB.getData('search') ? this.localDB.getData('search') : 'arijit singh'
 
             Search({
                 apiKey: 'AIzaSyDCJGBbq5Qm04-2nB0bojAFemHjFGht7sQ',

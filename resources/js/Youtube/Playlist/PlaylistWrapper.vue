@@ -17,6 +17,7 @@
             </ul>
           </div>
         </div>
+
         <form v-on:submit.prevent="handleSavePlaylist">
           <div class="form-group row">
             <div class="col-sm-8">
@@ -27,6 +28,7 @@
             </div>
           </div>
         </form>
+
       </div>
 
       <div v-if="loadingData"><i class="fas fa-circle-notch fa-spin"></i></div>
@@ -42,6 +44,7 @@
     components: {
       PlaylistItem
     },
+
     created () {
       window.eventBus.$on('successPlaylistItemAdded', data => {
         this.notificationClasses = 'vue-notification success'
@@ -51,6 +54,7 @@
           text: data
         });
       });
+
       window.eventBus.$on('errorPlaylistItemNotAdded', data => {
         this.notificationClasses = 'vue-notification error'
         this.$notify({
@@ -78,6 +82,7 @@
         this.loadingData = true;
         axios.get('api/user/playlists').then(response => {
           this.showPlaylist = !this.showPlaylist;
+
           setTimeout(() => {
             this.loadingData = false;
             this.playlist = response.data;
@@ -86,11 +91,13 @@
       },
       handleSavePlaylist () {
         axios.post('api/playlist', {name: this.playlistName, isPrivate: this.isPrivate})
+
           .then(response => {
             console.log('response', response);
             this.playlistName = '';
             this.playlist.unshift(response.data);
           })
+
           .catch(error => {
             if (error.response.status == 403) {
               alert(error.response.data.message);

@@ -1,6 +1,6 @@
 <script>
     import Search from './Search';
-    //import LocalDB from "../LocalDB";
+    import LocalDB from "../LocalDB";
 
     export default {
         created () {
@@ -45,6 +45,7 @@
 <template>
   <div class="Search__wrapper">
     <div class="container">
+
       <form v-on:submit.prevent="handleFormSubmit">
         <input
           v-bind:placeholder="placeholder"
@@ -52,6 +53,7 @@
           type="text"
           class="form-control">
       </form>
+
     </div>
   </div>
 </template>

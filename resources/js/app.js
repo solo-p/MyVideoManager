@@ -12,7 +12,7 @@ window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
 import VueYoutube from 'vue-youtube';
-//import Notifications from 'vue-notification';
+import Notifications from 'vue-notification';
 
 import YoutubeDash from './Youtube/YoutubeDash.vue';
 import VideoDetail from './Youtube/VideoDetail.vue';
